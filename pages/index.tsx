@@ -1,5 +1,9 @@
+import BaseLayout from '../components/ui/layout/BaseLayout'
+
 export default function Home() {
   return (
-    <div>Home</div>
+    <BaseLayout>
+      <div>Home</div>
+    </BaseLayout>
   )
 }
