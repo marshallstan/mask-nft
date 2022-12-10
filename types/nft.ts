@@ -1,7 +1,7 @@
 export type Trait = 'attack' | 'health' | 'speed'
 
 export type NftAttribute = {
-  trait_type: string
+  trait_type: Trait
   value: string
 }
 
