@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { ActiveLink } from '@components/ui'
-import { classNames } from '@utils/index'
+import { classNames } from '@utils'
 
 const navigation = [
   { name: 'Marketplace', href: '/', current: true },

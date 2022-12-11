@@ -1,7 +1,7 @@
 import { BaseLayout } from '@components/ui'
-import nfts from '@content/meta.json'
+import nfts from '../content/meta.json'
 import { NftMeta } from '@/types/nft'
-import { classNames } from '@utils/index'
+import { classNames } from '@utils'
 
 const tabs = [
   { name: 'Your Collection', href: '#', current: true }
