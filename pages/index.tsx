@@ -4,8 +4,15 @@ import { useWeb3 } from '@components/providers/web3'
 import nfts from '../content/meta.json'
 
 const Home = () => {
-  const { ethereum } = useWeb3()
-  console.log(ethereum)
+  const { provider } = useWeb3()
+  const getAccounts = async () => {
+    const accounts = await provider!.listAccounts()
+    console.log(accounts[0])
+  }
+
+  if (provider) {
+    getAccounts()
+  }
 
   return (
     <BaseLayout>
