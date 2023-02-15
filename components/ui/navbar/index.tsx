@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { ActiveLink } from '@components/ui'
+import { useAccount } from '@components/hooks'
 import { classNames } from '@utils'
 
 const navigation = [
@@ -10,7 +11,10 @@ const navigation = [
   { name: 'Create', href: '/nft/create', current: false }
 ]
 
-export default function Example() {
+export default function Navbar() {
+  const { data } = useAccount('Some Random Params')
+  // console.log('data ===> ' + data)
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (

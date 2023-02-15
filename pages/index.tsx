@@ -17,7 +17,7 @@ const Home = () => {
 
   const getAccounts = async () => {
     const accounts = await provider!.listAccounts()
-    console.log('accounts[0] ===> ' + accounts[0])
+    console.log('accounts[0] ===> ' + accounts)
   }
 
   if (provider) {
