@@ -32,7 +32,6 @@ export const loadContract = async (
   name: string,
   provider: providers.Web3Provider
 ): Promise<Contract> => {
-  console.log('NETWORK_ID ===> ' + NETWORK_ID)
   if (!NETWORK_ID) {
     return Promise.reject('Network ID is not defined!')
   }

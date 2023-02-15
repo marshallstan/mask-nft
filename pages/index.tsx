@@ -5,7 +5,15 @@ import nfts from '../content/meta.json'
 
 const Home = () => {
   const { provider, contract } = useWeb3()
-  console.log('contract ===> ' + contract)
+
+  const getNftInfo = async () => {
+    console.log(await contract!.name())
+    console.log(await contract!.symbol())
+  }
+
+  if (contract) {
+    getNftInfo()
+  }
 
   const getAccounts = async () => {
     const accounts = await provider!.listAccounts()
