@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { ethers } from 'ethers'
-import { createDefaultState, loadContract, Web3State } from './utils'
-import { setupHooks } from '@components/hooks/web3/setupHooks'
+import { createDefaultState, createWeb3State, loadContract, Web3State } from './utils'
 
 const Web3Context = createContext<Web3State>(createDefaultState())
 
@@ -15,13 +14,12 @@ const Web3Provider = (
       const provider = new ethers.providers.Web3Provider(window.ethereum as any)
       const contract = await loadContract('NftMarket', provider)
 
-      setWeb3Api({
+      setWeb3Api(createWeb3State({
         ethereum: window.ethereum,
         provider,
         contract,
-        isLoading: false,
-        hooks: setupHooks({ ethereum: window.ethereum, provider, contract })
-      })
+        isLoading: false
+      }))
     }
 
     initWeb3()
