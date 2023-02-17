@@ -2,9 +2,8 @@ import { Fragment } from 'react'
 import Link from 'next/link'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useAccount } from '@components/hooks/web3'
 import { ActiveLink } from '@components/ui'
-import { useWeb3 } from '@components/providers/web3'
-
 import { classNames } from '@utils'
 
 const navigation = [
@@ -13,9 +12,8 @@ const navigation = [
 ]
 
 export default function Navbar() {
-  const { hooks } = useWeb3()
-  const { data } = hooks.useAccount('')
-  console.log('data ===> ' + data)
+  const { account } = useAccount()
+  console.log('account.data ===> ' + account.data)
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
