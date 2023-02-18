@@ -13,7 +13,6 @@ const navigation = [
 
 export default function Navbar() {
   const { account } = useAccount()
-  console.log('account.data ===> ' + account.data)
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
