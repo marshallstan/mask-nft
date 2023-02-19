@@ -1,6 +1,6 @@
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useAccount } from '@components/hooks/web3'
+import { useAccount, useNetwork } from '@components/hooks/web3'
 import { ActiveLink } from '@components/ui'
 import { classNames } from '@utils'
 import Walletbar from './Walletbar'
@@ -12,6 +12,7 @@ const navigation = [
 
 export default function Navbar() {
   const { account } = useAccount()
+  const { network } = useNetwork()
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
