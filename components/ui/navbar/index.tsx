@@ -13,6 +13,8 @@ const navigation = [
 
 export default function Navbar() {
   const { account } = useAccount()
+  console.log('account.isLoading ===> ' + account.isLoading)
+  console.log('account.isInstalled ===> ' + account.isInstalled)
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
