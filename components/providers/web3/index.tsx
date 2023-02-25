@@ -3,6 +3,7 @@ import { ethers } from 'ethers'
 import { MetaMaskInpageProvider } from '@metamask/providers'
 import { createDefaultState, createWeb3State, loadContract, Web3State } from './utils'
 import { pageReload } from '@utils'
+import { NftMarketContract } from '@/types/nftMarketContract'
 
 const handleAccount = async () => {
   const isLocked = !(await window.ethereum._metamask.isUnlocked())
@@ -37,7 +38,7 @@ const Web3Provider = (
         setWeb3Api(createWeb3State({
           ethereum: window.ethereum,
           provider,
-          contract,
+          contract: contract as unknown as NftMarketContract,
           isLoading: false
         }))
       } catch (e) {
