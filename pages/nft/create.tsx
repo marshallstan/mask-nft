@@ -26,6 +26,17 @@ const NftCreate = () => {
     })
   }
 
+  const handleAttributeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    const attributeIdx = nftMeta.attributes.findIndex(arr => arr.trait_type === name)
+
+    nftMeta.attributes[attributeIdx].value = value
+    setNftMeta({
+      ...nftMeta,
+      attributes: nftMeta.attributes
+    })
+  }
+
   const createNft = () => {
     console.log('nftMeta ===> ', nftMeta)
   }
@@ -226,7 +237,7 @@ const NftCreate = () => {
                           </label>
                           <input
                             value={attribute.value}
-                            onChange={() => {}}
+                            onChange={handleAttributeChange}
                             type="text"
                             name={attribute.trait_type}
                             id={attribute.trait_type}
