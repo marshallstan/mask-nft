@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import useSWR from 'swr'
 import { ethers } from 'ethers'
 import { Nft } from '@/types/nft'
@@ -35,18 +36,23 @@ export const hookFactory: ListedNftsHookFactory = ({ contract }) => () => {
     }
   )
 
-  const buyNft = async (tokenId: number, value: number) => {
+  const _contract = contract
+  const buyNft = useCallback(async (tokenId: number, value: number) => {
     try {
-      const result = await contract?.buyNft(tokenId, {
-        value: ethers.utils.parseEther(value.toString())
-      })
+      if (_contract) {
+        const result = await _contract.buyNft(tokenId, {
+          value: ethers.utils.parseEther(value.toString())
+        })
 
-      await result?.wait()
-      alert('You have bought Nft. See profile page.')
+        await result?.wait()
+        alert('You have bought Nft. See profile page.')
+      } else {
+        alert('Waiting for connect! Please, refresh...')
+      }
     } catch (e: any) {
       console.error(e.message)
     }
-  }
+  }, [_contract])
 
   return {
     ...swr,
