@@ -16,6 +16,8 @@ const Profile = () => {
     if (nfts.data && nfts.data.length > 0) {
       setActiveNft(nfts.data[0])
     }
+
+    return () => setActiveNft(undefined)
   }, [nfts.data])
 
   return (
@@ -57,14 +59,14 @@ const Profile = () => {
                     role="list"
                     className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
                   >
-                    {(nfts.data as Nft[]).map((nft) => (
+                    {(nfts.data as Nft[]).map(nft => (
                       <li
                         key={nft.tokenId}
-                        onClick={() => {}}
+                        onClick={() => setActiveNft(nft)}
                         className="relative">
                         <div
                           className={classNames(
-                            true
+                            nft.tokenId === activeNft?.tokenId
                               ? 'ring-2 ring-offset-2 ring-indigo-500'
                               : 'focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-500',
                             'group block w-full aspect-w-10 aspect-h-7 rounded-lg bg-gray-100 overflow-hidden'
@@ -74,7 +76,7 @@ const Profile = () => {
                             src={nft.meta.image}
                             alt=""
                             className={classNames(
-                              true ? '' : 'group-hover:opacity-75',
+                              nft.tokenId === activeNft?.tokenId ? '' : 'group-hover:opacity-75',
                               'object-cover pointer-events-none'
                             )}
                           />
