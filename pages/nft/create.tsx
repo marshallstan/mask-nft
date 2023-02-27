@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react'
+import axios from 'axios'
 import Link from 'next/link'
 import { BaseLayout } from '@components/ui'
 import { Switch } from '@headlessui/react'
@@ -37,8 +38,12 @@ const NftCreate = () => {
     })
   }
 
-  const createNft = () => {
-    console.log('nftMeta ===> ', nftMeta)
+  const createNft = async () => {
+    try {
+      const messageToSign = await axios.get('/api/verify')
+    } catch (e: any) {
+      console.error(e.message)
+    }
   }
 
   return (
