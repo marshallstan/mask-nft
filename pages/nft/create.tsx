@@ -45,13 +45,17 @@ const NftCreate = () => {
       const messageToSign = await axios.get('/api/verify')
       const accounts = await ethereum?.request({ method: 'eth_requestAccounts' }) as string[]
       const account = accounts[0]
-      console.log('accounts ===> ', accounts)
 
       const signedData = await ethereum?.request({
         method: 'personal_sign',
         params: [JSON.stringify(messageToSign.data), account, messageToSign.data.id]
       })
-      console.log('signedData ===> ', signedData)
+
+      await axios.post('/api/verify', {
+        address: account,
+        signature: signedData,
+        nft: nftMeta
+      })
     } catch (e: any) {
       console.error(e.message)
     }
