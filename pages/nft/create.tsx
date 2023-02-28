@@ -4,8 +4,10 @@ import Link from 'next/link'
 import { BaseLayout } from '@components/ui'
 import { Switch } from '@headlessui/react'
 import { NftMeta } from '@/types/nft'
+import { useWeb3 } from '@components/providers/web3'
 
 const NftCreate = () => {
+  const { ethereum } = useWeb3()
   const [nftURI, setNftURI] = useState('')
   const [hasURI, setHasURI] = useState(false)
   const [nftMeta, setNftMeta] = useState<NftMeta>({
@@ -41,6 +43,15 @@ const NftCreate = () => {
   const createNft = async () => {
     try {
       const messageToSign = await axios.get('/api/verify')
+      const accounts = await ethereum?.request({ method: 'eth_requestAccounts' }) as string[]
+      const account = accounts[0]
+      console.log('accounts ===> ', accounts)
+
+      const signedData = await ethereum?.request({
+        method: 'personal_sign',
+        params: [JSON.stringify(messageToSign.data), account, messageToSign.data.id]
+      })
+      console.log('signedData ===> ', signedData)
     } catch (e: any) {
       console.error(e.message)
     }
