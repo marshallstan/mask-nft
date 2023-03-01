@@ -3,7 +3,7 @@ import axios from 'axios'
 import Link from 'next/link'
 import { BaseLayout } from '@components/ui'
 import { Switch } from '@headlessui/react'
-import { NftMeta } from '@/types/nft'
+import { NftMeta, PinataRes } from '@/types/nft'
 import { useWeb3 } from '@components/providers/web3'
 
 const NftCreate = () => {
@@ -53,6 +53,12 @@ const NftCreate = () => {
         bytes,
         contentType: file.type,
         fileName: file.name.replace(/\.[^/.]+$/, '')
+      })
+      const data = res.data as PinataRes
+
+      setNftMeta({
+        ...nftMeta,
+        image: `${process.env.NEXT_PUBLIC_PINATA_DOMAIN}/ipfs/${data.IpfsHash}`
       })
     } catch (e: any) {
       console.error(e.message)
@@ -237,10 +243,8 @@ const NftCreate = () => {
                       </p>
                     </div>
                     {/* Has Image? */}
-                    {false ?
-                      <img
-                        src="https://eincode.mypinata.cloud/ipfs/QmaQYCrX9Fg2kGijqapTYgpMXV7QPPzMwGrSRfV9TvTsfM/Creature_1.png"
-                        alt="" className="h-40" /> :
+                    {nftMeta.image ?
+                      <img src={nftMeta.image} alt="" className="h-40" /> :
                       <div>
                         <label className="block text-sm font-medium text-gray-700">Image</label>
                         <div
