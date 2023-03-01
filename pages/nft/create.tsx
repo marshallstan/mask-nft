@@ -105,7 +105,7 @@ const NftCreate = () => {
 
   const createNft = async () => {
     try {
-      const nftRes = await axios.get(nftURI)
+      const nftRes = await axios.get('/api/nftURI', { params: { nftURI } })
       const content = nftRes.data
 
       Object.keys(content).forEach(key => {
