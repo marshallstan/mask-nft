@@ -47,7 +47,7 @@ const NftCreate = () => {
     try {
       const { signedData, account } = await getSignedData()
 
-      await axios.post('/api/verify-image', {
+      const res = await axios.post('/api/verify-image', {
         address: account,
         signature: signedData,
         bytes,
