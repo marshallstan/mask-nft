@@ -35,7 +35,7 @@ const NftCreate = () => {
   }
 
   const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) {
+    if (!e.target.files || e.target.files.length === 0) {
       console.error('Select a file')
       return
     }
