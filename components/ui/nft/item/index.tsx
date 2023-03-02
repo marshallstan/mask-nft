@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Nft } from '@/types/nft'
 
 type NftItemProps = {
@@ -11,7 +12,7 @@ const NftItem = (
   return (
     <>
       <div className="flex-shrink-0">
-        <img
+        <Image
           className={`h-full w-full object-cover`}
           src={item.meta.image}
           alt="New NFT"
@@ -34,7 +35,7 @@ const NftItem = (
               <dd className="order-1 text-xl font-extrabold text-indigo-600">
                 <div className="flex justify-center items-center">
                   {item.price}
-                  <img className="h-6" src="/images/small-eth.webp" alt="ether icon" />
+                  <Image className="h-6" src="/images/small-eth.webp" alt="ether icon" />
                 </div>
               </dd>
             </div>

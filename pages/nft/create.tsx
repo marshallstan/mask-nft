@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react'
 import axios from 'axios'
 import { ethers } from 'ethers'
 import Link from 'next/link'
+import Image from 'next/image'
 import { toast } from 'react-toastify'
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid'
 import { BaseLayout } from '@components/ui'
@@ -333,7 +334,7 @@ const NftCreate = () => {
                     </div>
                     {/* Has Image? */}
                     {nftMeta.image ?
-                      <img src={nftMeta.image} alt="" className="h-40" /> :
+                      <Image src={nftMeta.image} alt="" className="h-40" /> :
                       <div>
                         <label className="block text-sm font-medium text-gray-700">Image</label>
                         <div

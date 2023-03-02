@@ -1,5 +1,6 @@
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
 import { useAccount, useNetwork } from '@components/hooks/web3'
 import { ActiveLink } from '@components/ui'
 import { classNames } from '@utils'
@@ -34,7 +35,7 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
+                  <Image
                     className="hidden lg:block h-10 w-auto"
                     src="/images/page_logo.png"
                     alt="Workflow"
