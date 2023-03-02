@@ -6,7 +6,8 @@ import { NftMarketContract } from '@/types/nftMarketContract'
 import contract from '../../public/contracts/NftMarket.json'
 
 const NETWORKS = {
-  '5777': 'Ganache'
+  '5777': 'Ganache',
+  '11155111': 'Sepolia'
 }
 
 type NETWORK = typeof NETWORKS;
