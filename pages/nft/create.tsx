@@ -11,6 +11,7 @@ const ALLOWED_FIELDS = ['name', 'description', 'image', 'attributes']
 const NftCreate = () => {
   const { ethereum } = useWeb3()
   const [nftURI, setNftURI] = useState('')
+  const [price, setPrice] = useState('')
   const [hasURI, setHasURI] = useState(false)
   const [nftMeta, setNftMeta] = useState<NftMeta>({
     name: '',
@@ -114,7 +115,7 @@ const NftCreate = () => {
         }
       })
 
-      alert('Can create NFT')
+      alert('Can create NFT: ' + price)
     } catch (e: any) {
       console.error(e.message)
     }
@@ -196,6 +197,8 @@ const NftCreate = () => {
                       </label>
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <input
+                          value={price}
+                          onChange={e => setPrice(e.target.value)}
                           type="number"
                           name="price"
                           id="price"
