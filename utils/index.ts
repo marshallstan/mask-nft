@@ -5,3 +5,7 @@ export function classNames(...classes: string[]) {
 export function pageReload() {
   window.location.reload()
 }
+
+export function shortifyAddress(address: string) {
+  return `0x****${address.slice(-4)}`
+}

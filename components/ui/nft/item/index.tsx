@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Nft } from '@/types/nft'
+import { shortifyAddress } from '@utils'
 
 type NftItemProps = {
   item: Nft
@@ -20,9 +21,28 @@ const NftItem = (
       </div>
       <div className="flex-1 bg-white p-6 flex flex-col justify-between">
         <div className="flex-1">
-          <p className="text-sm font-medium text-indigo-600">
-            Creatures NFT
-          </p>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center mt-2">
+              <div>
+                <Image
+                  className="inline-block h-9 w-9 rounded-full"
+                  src="/images/default_avatar.png"
+                  alt=""
+                />
+              </div>
+              <div className="ml-3">
+                <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+                  Creator
+                </p>
+                <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                  {shortifyAddress(item.creator)}
+                </p>
+              </div>
+            </div>
+            <p className="text-sm font-medium text-indigo-600">
+              Creatures NFT
+            </p>
+          </div>
           <div className="block mt-2">
             <p className="text-xl font-semibold text-gray-900">{item.meta.name}</p>
             <p className="mt-3 mb-3 text-base text-gray-500">{item.meta.description}</p>
