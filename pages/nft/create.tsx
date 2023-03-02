@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 import axios from 'axios'
+import { ethers } from 'ethers'
 import Link from 'next/link'
 import { BaseLayout } from '@components/ui'
 import { Switch } from '@headlessui/react'
@@ -9,7 +10,7 @@ import { useWeb3 } from '@components/providers/web3'
 const ALLOWED_FIELDS = ['name', 'description', 'image', 'attributes']
 
 const NftCreate = () => {
-  const { ethereum } = useWeb3()
+  const { ethereum, contract } = useWeb3()
   const [nftURI, setNftURI] = useState('')
   const [price, setPrice] = useState('')
   const [hasURI, setHasURI] = useState(false)
@@ -115,7 +116,16 @@ const NftCreate = () => {
         }
       })
 
-      alert('Can create NFT: ' + price)
+      const tx = await contract?.mintToken(
+        nftURI,
+        ethers.utils.parseEther(price),
+        {
+          value: ethers.utils.parseEther(0.025.toString())
+        }
+      )
+      await tx?.wait()
+
+      alert('Nft was created!')
     } catch (e: any) {
       console.error(e.message)
     }
