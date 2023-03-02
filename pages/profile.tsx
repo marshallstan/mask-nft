@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 import { BaseLayout } from '@components/ui'
 import { Nft } from '@/types/nft'
 import { classNames } from '@utils'
@@ -73,7 +72,7 @@ const Profile = () => {
                             'group block w-full aspect-w-10 aspect-h-7 rounded-lg bg-gray-100 overflow-hidden'
                           )}
                         >
-                          <Image
+                          <img
                             src={nft.meta.image}
                             alt=""
                             className={classNames(
@@ -101,7 +100,7 @@ const Profile = () => {
                 <div className="pb-16 space-y-6">
                   <div>
                     <div className="block w-full aspect-w-10 aspect-h-7 rounded-lg overflow-hidden">
-                      <Image src={activeNft.meta.image} alt="" className="object-cover" />
+                      <img src={activeNft.meta.image} alt="" className="object-cover" />
                     </div>
                     <div className="mt-4 flex items-start justify-between">
                       <div>

@@ -3,6 +3,7 @@ import { Menu } from '@headlessui/react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { classNames } from '@utils'
+import default_user_image from '@public/images/default_user_image.png'
 
 type WalletbarProps = {
   isLoading: boolean;
@@ -40,7 +41,7 @@ const Walletbar: FC<WalletbarProps> = ({
             <span className="sr-only">Open user menu</span>
             <Image
               className="h-8 w-8 rounded-full"
-              src="/images/default_user_image.png"
+              src={default_user_image}
               alt=""
             />
           </Menu.Button>

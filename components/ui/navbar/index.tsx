@@ -5,6 +5,7 @@ import { useAccount, useNetwork } from '@components/hooks/web3'
 import { ActiveLink } from '@components/ui'
 import { classNames } from '@utils'
 import Walletbar from './Walletbar'
+import page_logo from '@public/images/page_logo.png'
 
 const navigation = [
   { name: 'Marketplace', href: '/', current: true },
@@ -37,7 +38,7 @@ export default function Navbar() {
                 <div className="flex flex-shrink-0 items-center">
                   <Image
                     className="hidden lg:block h-10 w-auto"
-                    src="/images/page_logo.png"
+                    src={page_logo}
                     alt="Workflow"
                   />
                 </div>
