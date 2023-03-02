@@ -3,6 +3,7 @@ import axios from 'axios'
 import { ethers } from 'ethers'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid'
 import { BaseLayout } from '@components/ui'
@@ -16,6 +17,7 @@ const ALLOWED_FIELDS = ['name', 'description', 'image', 'attributes']
 const NftCreate = () => {
   const { ethereum, contract } = useWeb3()
   const { network } = useNetwork()
+  const router = useRouter()
   const [nftURI, setNftURI] = useState('')
   const [price, setPrice] = useState('')
   const [hasURI, setHasURI] = useState(false)
@@ -148,10 +150,12 @@ const NftCreate = () => {
         tx!.wait(),
         {
           pending: 'Minting Nft Token',
-          success: 'Nft has ben created',
+          success: 'Nft has been created',
           error: 'Minting error'
         }
       )
+
+      await router.push('/')
     } catch (e: any) {
       console.error(e.message)
     }
