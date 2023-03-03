@@ -1,17 +1,35 @@
 import Image from 'next/image'
+import { toast } from 'react-toastify'
 import { Nft } from '@/types/nft'
 import { shortifyAddress } from '@utils'
 import default_avatar from '@public/images/default_avatar.png'
 import small_eth from '@public/images/small-eth.webp'
+import { useAccount } from '@components/hooks/web3'
 
 type NftItemProps = {
   item: Nft
+  isRequesting: boolean
+  setIsRequesting: (value: boolean) => void
   buyNft: (token: number, value: number) => Promise<void>
 }
 
 const NftItem = (
-  { item, buyNft }: NftItemProps
+  { item, buyNft, isRequesting, setIsRequesting }: NftItemProps
 ) => {
+  const { account } = useAccount()
+
+  const handleBuyNft = async () => {
+    const alreadyHave = item.creator === account.data
+
+    if (alreadyHave) {
+      toast('You already own this NFT!')
+    } else {
+      setIsRequesting(true)
+      await buyNft(item.tokenId, item.price)
+      setIsRequesting(false)
+    }
+  }
+
   return (
     <>
       <div className="flex-shrink-0 p-[50%] relative">
@@ -79,16 +97,16 @@ const NftItem = (
         </div>
         <div>
           <button
-            onClick={() => {
-              buyNft(item.tokenId, item.price)
-            }}
+            onClick={handleBuyNft}
             type="button"
+            disabled={isRequesting}
             className="disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none disabled:cursor-not-allowed mr-2 inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Buy
           </button>
           <button
             type="button"
+            disabled
             className="disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none disabled:cursor-not-allowed inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Preview
