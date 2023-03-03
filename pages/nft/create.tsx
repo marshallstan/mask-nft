@@ -153,8 +153,8 @@ const NftCreate = () => {
       }
 
       setIsRequesting(true)
-      const nftRes = await axios.get('/api/nftURI', { params: { nftURI } })
-      const content = nftRes.data
+      const metaRes = await fetch(nftURI)
+      const content = await metaRes.json()
 
       Object.keys(content).forEach(key => {
         if (!ALLOWED_FIELDS.includes(key)) {
