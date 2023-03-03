@@ -40,6 +40,7 @@ export default function Navbar() {
                     className="hidden lg:block h-10 w-auto"
                     src={page_logo}
                     alt="Workflow"
+                    priority
                   />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
