@@ -14,12 +14,14 @@ const NftItem = (
 ) => {
   return (
     <>
-      <div className="flex-shrink-0">
-        <img
-          className={`h-full w-full object-cover`}
-          src={item.meta.image}
-          alt="New NFT"
-        />
+      <div className="flex-shrink-0 p-[50%] relative">
+        <div className="absolute inset-0 flex flex-col justify-center">
+          <img
+            className={`w-full h-auto`}
+            src={item.meta.image}
+            alt="New NFT"
+          />
+        </div>
       </div>
       <div className="flex-1 bg-white p-6 flex flex-col justify-between">
         <div className="flex-1">
@@ -57,7 +59,7 @@ const NftItem = (
               <dd className="order-1 text-xl font-extrabold text-indigo-600">
                 <div className="flex justify-center items-center">
                   {item.price}
-                  <Image className="h-6" src={small_eth} alt="ether icon" />
+                  <Image width={24} height={24} src={small_eth} alt="ether icon" />
                 </div>
               </dd>
             </div>
