@@ -20,7 +20,7 @@ export default withSession(async (
       const { body } = req
       const nft = body.nft as NftMeta
 
-      if (!nft.name || !nft.description || !nft.attributes) {
+      if (!nft.image || !nft.name || !nft.description || !nft.attributes) {
         return res.status(422).send({ message: 'Some of the form data are missing!' })
       }
 
