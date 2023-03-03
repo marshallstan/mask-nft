@@ -9,7 +9,7 @@ Mask-nft has dependencies on multiple technologies.
 
 ## To run the app
 
-1. run `pnpm` to install dependencies
+1. run `npm install` to install dependencies
 
 2. In the root folder of the application create a `.env.development` file with following content:
 
@@ -39,4 +39,4 @@ INFURA_SEPOLIA_URL={your sepolia test url(If you want to deploy this on test cha
 
 4. Now everything is set up, and you can test out the app.
 
-* Run `pnpm dev` in the terminal. App will run at `localhost:3000`
+* Run `npm run dev` in the terminal. App will run at `localhost:3000`
