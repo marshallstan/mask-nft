@@ -143,6 +143,10 @@ const NftCreate = () => {
 
   const createNft = async () => {
     try {
+      if (!nftURI) {
+        toast('Please input a valid json file!')
+        return
+      }
       if (!price || !isValidNum(price) || parseFloat(price) <= 0) {
         toast('Please input a valid number!')
         return
@@ -251,7 +255,8 @@ const NftCreate = () => {
                         </label>
                         <div className="mt-1 flex rounded-md shadow-sm">
                           <input
-                            onChange={(e) => setNftURI(e.target.value)}
+                            value={nftURI}
+                            onChange={e => setNftURI(e.target.value)}
                             type="text"
                             name="uri"
                             id="uri"
