@@ -10,7 +10,24 @@ const tabs = [
 
 const Profile = () => {
   const { nfts } = useOwnedNfts()
+  const [isRequesting, setIsRequesting] = useState(false)
   const [activeNft, setActiveNft] = useState<Nft>()
+
+  const handleListNft = async () => {
+    if (!activeNft) {
+      return
+    }
+
+    try {
+      setIsRequesting(true)
+      await nfts.listNft(activeNft.tokenId, activeNft.price)
+      setIsRequesting(false)
+      setActiveNft({ ...activeNft, isListed: true })
+    } catch (e: any) {
+      setIsRequesting(false)
+      console.error(e.message)
+    }
+  }
 
   useEffect(() => {
     if (nfts.data && nfts.data.length > 0) {
@@ -134,16 +151,15 @@ const Profile = () => {
 
                   <div className="flex">
                     <button
+                      disabled
                       type="button"
-                      className="flex-1 bg-indigo-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="disabled:cursor-not-allowed flex-1 bg-indigo-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                       Download Image
                     </button>
                     <button
-                      disabled={activeNft.isListed}
-                      onClick={() => {
-                        nfts.listNft(activeNft.tokenId, activeNft.price)
-                      }}
+                      disabled={activeNft.isListed || isRequesting}
+                      onClick={handleListNft}
                       type="button"
                       className="disabled:text-gray-400 disabled:cursor-not-allowed flex-1 ml-3 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
