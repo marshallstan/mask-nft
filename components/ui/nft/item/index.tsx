@@ -5,6 +5,7 @@ import { shortifyAddress } from '@utils'
 import default_avatar from '@public/images/default_avatar.png'
 import small_eth from '@public/images/small-eth.webp'
 import { useAccount } from '@components/hooks/web3'
+import { useWeb3 } from '@components/providers/web3'
 
 type NftItemProps = {
   item: Nft
@@ -16,10 +17,15 @@ type NftItemProps = {
 const NftItem = (
   { item, buyNft, isRequesting, setIsRequesting }: NftItemProps
 ) => {
+  const { contract } = useWeb3()
   const { account } = useAccount()
 
   const handleBuyNft = async () => {
-    const alreadyHave = item.creator === account.data
+    if (!contract) {
+      return
+    }
+    const owner = await contract.ownerOf(item.tokenId)
+    const alreadyHave = owner === account.data
 
     if (alreadyHave) {
       toast('You already own this NFT!')
