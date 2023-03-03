@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react'
 import axios from 'axios'
 import { ethers } from 'ethers'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid'
@@ -10,6 +11,7 @@ import { Switch } from '@headlessui/react'
 import { NftMeta, PinataRes } from '@/types/nft'
 import { useWeb3 } from '@components/providers/web3'
 import { useNetwork } from '@components/hooks/web3'
+import { isValidNum } from '@utils'
 
 const ALLOWED_FIELDS = ['name', 'description', 'image', 'attributes']
 
@@ -20,6 +22,7 @@ const NftCreate = () => {
   const [nftURI, setNftURI] = useState('')
   const [price, setPrice] = useState('')
   const [hasURI, setHasURI] = useState(false)
+  const [isRequesting, setIsRequesting] = useState(false)
   const [nftMeta, setNftMeta] = useState<NftMeta>({
     name: '',
     description: '',
@@ -55,6 +58,7 @@ const NftCreate = () => {
     const bytes = new Uint8Array(buffer)
 
     try {
+      setIsRequesting(true)
       const { signedData, account } = await getSignedData()
 
       const promise = axios.post('/api/verify-image', {
@@ -74,11 +78,13 @@ const NftCreate = () => {
       )
       const data = res.data as PinataRes
 
+      setIsRequesting(false)
       setNftMeta({
         ...nftMeta,
         image: `${process.env.NEXT_PUBLIC_PINATA_DOMAIN}/ipfs/${data.IpfsHash}`
       })
     } catch (e: any) {
+      setIsRequesting(false)
       console.error(e.message)
     }
   }
@@ -104,6 +110,12 @@ const NftCreate = () => {
 
   const uploadMetadata = async () => {
     try {
+      if (!nftMeta.image || !nftMeta.name || !nftMeta.description || !nftMeta.attributes) {
+        toast('Please fill out the form!')
+        return
+      }
+
+      setIsRequesting(true)
       const { signedData, account } = await getSignedData()
 
       const promise = axios.post('/api/verify', {
@@ -121,14 +133,22 @@ const NftCreate = () => {
       )
 
       const data = res.data as PinataRes
+      setIsRequesting(false)
       setNftURI(`${process.env.NEXT_PUBLIC_PINATA_DOMAIN}/ipfs/${data.IpfsHash}`)
     } catch (e: any) {
+      setIsRequesting(false)
       console.error(e.message)
     }
   }
 
   const createNft = async () => {
     try {
+      if (!price || !isValidNum(price) || parseFloat(price) <= 0) {
+        toast('Please input a valid number!')
+        return
+      }
+
+      setIsRequesting(true)
       const nftRes = await axios.get('/api/nftURI', { params: { nftURI } })
       const content = nftRes.data
 
@@ -156,6 +176,7 @@ const NftCreate = () => {
 
       await router.push('/')
     } catch (e: any) {
+      setIsRequesting(false)
       console.error(e.message)
     }
   }
@@ -268,7 +289,7 @@ const NftCreate = () => {
                           name="price"
                           id="price"
                           className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-                          placeholder="0.8"
+                          placeholder="nft price"
                         />
                       </div>
                     </div>
@@ -277,7 +298,8 @@ const NftCreate = () => {
                     <button
                       onClick={createNft}
                       type="button"
-                      className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      disabled={isRequesting}
+                      className="disabled:cursor-not-allowed inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                       List
                     </button>
@@ -335,9 +357,14 @@ const NftCreate = () => {
                         Brief description of NFT
                       </p>
                     </div>
-                    {/* Has Image? */}
                     {nftMeta.image ?
-                      <img src={nftMeta.image} alt="" className="h-40" /> :
+                      <Image
+                        src={nftMeta.image}
+                        alt=""
+                        className="h-40"
+                        width={160}
+                        height={160}
+                      /> :
                       <div>
                         <label className="block text-sm font-medium text-gray-700">Image</label>
                         <div
@@ -403,7 +430,8 @@ const NftCreate = () => {
                     <button
                       onClick={uploadMetadata}
                       type="button"
-                      className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      disabled={isRequesting}
+                      className="disabled:cursor-not-allowed inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                       List
                     </button>
