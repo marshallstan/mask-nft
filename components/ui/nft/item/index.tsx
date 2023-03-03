@@ -35,7 +35,6 @@ const NftItem = (
       <div className="flex-shrink-0 p-[50%] relative">
         <div className="absolute inset-0 flex flex-col justify-center">
           <img
-            className={`w-full h-auto`}
             src={item.meta.image}
             alt="New NFT"
           />

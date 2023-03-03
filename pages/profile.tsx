@@ -72,14 +72,18 @@ const Profile = () => {
                             'group block w-full aspect-w-10 aspect-h-7 rounded-lg bg-gray-100 overflow-hidden'
                           )}
                         >
-                          <img
-                            src={nft.meta.image}
-                            alt=""
-                            className={classNames(
-                              nft.tokenId === activeNft?.tokenId ? '' : 'group-hover:opacity-75',
-                              'object-cover pointer-events-none'
-                            )}
-                          />
+                          <div className="p-[50%] relative">
+                            <div className="absolute inset-0 flex flex-col justify-center">
+                              <img
+                                src={nft.meta.image}
+                                alt=""
+                                className={classNames(
+                                  nft.tokenId === activeNft?.tokenId ? '' : 'group-hover:opacity-75',
+                                  'object-cover pointer-events-none'
+                                )}
+                              />
+                            </div>
+                          </div>
                           <button type="button" className="absolute inset-0 focus:outline-none">
                             <span className="sr-only">View details for {nft.meta.name}</span>
                           </button>
@@ -99,8 +103,10 @@ const Profile = () => {
               {activeNft &&
                 <div className="pb-16 space-y-6">
                   <div>
-                    <div className="block w-full aspect-w-10 aspect-h-7 rounded-lg overflow-hidden">
-                      <img src={activeNft.meta.image} alt="" className="object-cover" />
+                    <div className="p-[50%] relative rounded-lg overflow-hidden">
+                      <div className="absolute inset-0 flex flex-col justify-center">
+                        <img src={activeNft.meta.image} alt="" />
+                      </div>
                     </div>
                     <div className="mt-4 flex items-start justify-between">
                       <div>
@@ -108,7 +114,9 @@ const Profile = () => {
                           <span className="sr-only">Details for </span>
                           {activeNft.meta.name}
                         </h2>
-                        <p className="text-sm font-medium text-gray-500">{activeNft.meta.description}</p>
+                        <p className="text-sm font-medium text-gray-500">
+                          {activeNft.meta.description}
+                        </p>
                       </div>
                     </div>
                   </div>
